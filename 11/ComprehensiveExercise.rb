@@ -22,9 +22,9 @@ class InventoryItem
   end
   
   # Creating instances of InventoryItem class
-  item1 = InventoryItem.new("Laptop", "Electronics", 15, 1200.0)
-  item2 = InventoryItem.new("T-shirt", "Apparel", 8, 25.0)
-  item3 = InventoryItem.new("Coffee Maker", "Kitchen", 5, 60.0)
+  item1 = InventoryItem.new("apple", "fruit", 15, 1200.0)
+  item2 = InventoryItem.new("T-shirt", "clothes", 8, 25.0)
+  item3 = InventoryItem.new("Coffee ", "drink", 5, 60.0)
   
   # Adding items to an array
   inventory_array = [item1, item2, item3]
