@@ -1,8 +1,6 @@
 class InventoryItem
-    # Creating attributes and corresponding methods to access/modify them
     attr_accessor :name, :category, :quantity, :price
   
-    # Constructor to set initial values
     def initialize(name, category, quantity, price)
       @name = name
       @category = category
@@ -10,29 +8,43 @@ class InventoryItem
       @price = price
     end
   
-    # Method to display item details
     def display_details
-      puts "Item: #{@name}, Category: #{@category}, Quantity: #{@quantity}, Price: $#{@price}"
+      puts "Name: #{@name}, Category: #{@category}, Quantity: #{@quantity}, Price: #{@price}"
     end
   
-    # Method to check if quantity is below 10
+    def to_hash
+      { name: @name, category: @category, quantity: @quantity, price: @price }
+    end
+  
     def check_stock
       puts "Low stock, order more." if @quantity < 10
     end
   end
   
-  # Creating instances of InventoryItem class
-  item1 = InventoryItem.new("apple", "fruit", 15, 1200.0)
-  item2 = InventoryItem.new("T-shirt", "clothes", 8, 25.0)
-  item3 = InventoryItem.new("Coffee ", "drink", 5, 60.0)
+  # Initialize instances
+  item1 = InventoryItem.new("Item1", "Electronics", 15, 499.99)
+  item2 = InventoryItem.new("Item2", "Clothing", 5, 29.99)
+  item3 = InventoryItem.new("Item3", "Books", 8, 12.99)
   
-  # Adding items to an array
-  inventory_array = [item1, item2, item3]
+  # Array and Iteration
+  inventory = [item1, item2, item3]
   
-
+  puts "Details of each item:"
+  inventory.each { |item| item.display_details }
   
-  # Prompting user for new item details
-  puts "\nEnter details for a new item:"
+  # Hash and Method
+  def print_details_using_hash(item)
+    item_hash = item.to_hash
+    puts "Details using hash: #{item_hash}"
+  end
+  
+  # Control Flow
+  def check_stock_and_order(item)
+    item.check_stock
+  end
+  
+  # User Interaction
+  puts "Enter details for a new item:"
   print "Name: "
   new_name = gets.chomp
   print "Category: "
@@ -42,11 +54,34 @@ class InventoryItem
   print "Price: "
   new_price = gets.to_f
   
-  # Creating a new item with user-provided details
   new_item = InventoryItem.new(new_name, new_category, new_quantity, new_price)
-  inventory_array << new_item
+  inventory << new_item
   
-  # Displaying details of the new item
-  puts "\nNew Item Details:"
-  new_item.display_details
+  # Class Inheritance
+  class DiscountedItem < InventoryItem
+    attr_accessor :discount_percentage
+  
+    def initialize(name, category, quantity, price, discount_percentage)
+      super(name, category, quantity, price)
+      @discount_percentage = discount_percentage
+    end
+  
+    def display_details
+      discounted_price = @price - (@price * @discount_percentage / 100)
+      puts "Name: #{@name}, Category: #{@category}, Quantity: #{@quantity}, Price: #{discounted_price} (Discounted)"
+    end
+  end
+  
+  # Calculate total value
+  def calculate_total_value(inventory)
+    total_value = inventory.sum { |item| item.quantity * item.price }
+    puts "Total value of inventory: $#{total_value}"
+  end
+  
+  # Example of using DiscountedItem
+  discounted_item = DiscountedItem.new("DiscountedItem", "Electronics", 10, 99.99, 20)
+  discounted_item.display_details
+  
+  # Calculate total value of the inventory
+  calculate_total_value(inventory)
   
